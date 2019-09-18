@@ -24,7 +24,7 @@ def main():
       
        c, addr = s.accept()      
        print ('Got connection from', addr)
-       c.sendall(b'Thank you for connecting')
+       c.sendall(b'Hi')
        c.close()
     
 #Call main function
