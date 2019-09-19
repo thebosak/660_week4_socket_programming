@@ -7,18 +7,22 @@ import socket
 #Create main function
 def main():
     # Create a socket object 
-    s = socket.socket()
+    clientSocket = socket.socket()
       
     # Define the port on which you want to connect 
-    port = 12345
-      
-    # connect to the server on local computer
-    s.connect(('127.0.0.1', port))
-      
+    port = 9500
+    
+    clientSocket.connect(('127.0.0.1', port))
+    clientMessage = input("Enter your message to send to the server: ")
+    clientSocket.send(clientMessage.encode())
+#     clientSocket.send('Hello'.encode())
+    dataFromServer = clientSocket.recv(1024).decode()
+    print ("Message from server is", dataFromServer)
+    
     # receive data from the server 
-    print ('Data received: ', s.recv(1024))
+#     print ('Data received from server: ', clientSocket.recv(1024))
     # close the connection 
-    s.close() 
+#     clientSocket.close()
     
 #Call main function
 main()
