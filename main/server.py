@@ -5,38 +5,33 @@ Created on September 16, 2019
 '''
 import socket
 import sys  
-#Create main function
-def main():
-    # next create a socket object 
+
+def createServer():
+    #Create server socket
     serverSocket = socket.socket()          
-    print ("Socket successfully created")
-      
-    # reserve a port on your computer
-    port = 9500                
-      
-    serverSocket.bind(('', port))
-    print ("Server socket binded to %s" %(port)) 
-      
-    serverSocket.listen(5)      
-    print ("Server socket is listening")
     
-    while True: 
+    #Define port and bind
+    port = 9500
+    serverSocket.bind(('', port))
+    
+    serverSocket.listen(5)      
+    print ("Server socket is created, binded to port {0}, and listening".format(port))
+    
+    while True:
         
+        #Find client
         (clientSocket, address) = serverSocket.accept()
-        print ("Connection found from, ", address)
+        print ("Connection found from ", address)
         dataFromClient = clientSocket.recv(1024).decode()
+        
+        #Logic around messages
         if dataFromClient == "Hello":
             returnMessage = "Hi"
         else:
             returnMessage = "Goodbye"
+        #Print client message and send return message
         print ('Message from client is:', dataFromClient)
         clientSocket.send(returnMessage.encode())
-    
-#        clientData = clientSocket.recv(1024)
-#        print('Data sent from client: ', clientSocket.recv(1024))
-#        returnMessage = "Hi"
-#        clientSocket.sendall(b'Hi')
-#        clientSocket.close()
-    
+
 #Call main function
-main()
+createServer()
